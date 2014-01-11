@@ -1,0 +1,26 @@
+{
+  "name": "sassifaction",
+  "version": "0.0.1",
+  "description": "Things I'd want to if I was to use Gulp to work on a project with Sassifaction",
+  "main": "gulpfile.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sturobson/Sassifaction-Gulp.git"
+  },
+  "author": "Stuart Robson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sturobson/Sassifaction-Gulp/issues"
+  },
+  "devDependencies": {
+    "gulp": "~3.2.4",
+    "gulp-sass": "~0.3.0",
+    "gulp-autoprefixer": "~0.0.3",
+    "gulp-minify-css": "0.1.0",
+    "gulp-uglify": "~0.1.0",
+    "gulp-svgmin": "~0.3.0",
+    "gulp-imagemin": "~0.1.4",
+    "gulp-size": "~0.1.1"
+  }
+}

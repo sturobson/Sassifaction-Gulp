@@ -1,0 +1,809 @@
+/*
+
+	Compass style tine & shade functions
+	////////////////////////////////////
+
+	Compass comes with two more colour functions that aren't available in 'bog standard' Sass.
+	These are the option to tint and shade a colour with white and black.
+	Tint & Shade are different to lighten and darken.
+
+	You would use these like you do any other Sass colour function.
+
+		body {
+			background-color: tint(red, 30%);
+		}
+		p {
+			color: shade(red, 70%);
+		}
+
+	Which would give the output
+
+		body {
+			background-color: #ff4c4c;
+		}
+
+		p {
+			color: #4c0000;
+		}
+
+*/
+/*
+
+    A simpler media query mixin
+
+    This mixin allows you to quickly create a media query in your project. With the ability to define the breakpoint in PX (which get's converted into EMs).
+    There's also the ability to define min/max and width/height (with defaults to min-width).
+
+    There's also an option to duplicate the content into a OldIE conditionally classed bit of CSS.
+
+    You would use it like this
+
+        body {
+            @include (280) {
+                background-color: blue;
+            }
+            @include mq(600, false) {
+                background-color: red;
+            }
+            @include mq(1200, true, max) {
+                font-size: 110%;
+            }
+        }
+
+    Which would give you this compiled CSS
+
+        @media (min-width: 17.5em) {
+            body {
+                background-color: blue;
+            }
+        }
+        @media (min-width: 37.5em) {
+            body {
+            background-color: red;
+            }
+        }
+        .lt-ie9 body {
+            font-size: 110%;
+        }
+        @media (max-width: 75em) {
+            body {
+                font-size: 110%;
+            }
+        }
+
+*/
+/*
+
+Vertical Rhythm Mixin
+
+This mixin is to help create a typograhpical baseline grid but also to allow for specifying different line heights or bottom margins if you need to.
+
+In this mixin you can specifiy the font size in PX and it will calculate the REM based on your $doc-font-size & $doc-line-height variables.
+
+	@include font-size(24);
+
+It will also create a bottom margin based on the $doc-font-size & $doc-line-height variables unless you specify that it shouldn't have one -
+
+	@include font-size(24, no);
+
+Or if you want to specify a different bottom margin to be generated -
+
+	@include font-size(24,32);
+
+This mixin also generates a pixel-less line height by default unless you specify that you either don't want one where I'd suggest declaring 1 within the mixin -
+
+	@include font-size(24, yes, 1);
+
+There's also the option to specify a different line-height for it to generate to, where you would specify the line-height in (effectively) it's pixel value -
+
+	@include font-size(24, yes, 40);
+
+*/
+/*
+
+	REMs with PX fallback mixin
+
+	Sometimes you would only want to define the fonts' size on an element.
+	Rather than make the vertical rhythm mixin more convoluted here is a separate mixin
+	to be used to give REMs for modern browsers and PX for OldIE and Opera mini
+
+*/
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%; }
+
+@-webkit-viewport {
+  width: device-width; }
+
+@-moz-viewport {
+  width: device-width; }
+
+@-ms-viewport {
+  width: device-width; }
+
+@-o-viewport {
+  width: device-width; }
+
+@viewport {
+  width: device-width; }
+
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+article, aside, details, figcaption, figure, footer, header, main, nav, section, summary {
+  display: block; }
+
+audio, canvas, video {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1; }
+
+audio:not([controls]) {
+  display: none;
+  height: 0; }
+
+[hidden] {
+  display: none; }
+
+html, button, input, select, textarea {
+  font-family: sans-serif; }
+
+body {
+  margin: 0; }
+
+a:focus {
+  outline: thin dotted; }
+
+a:active, a:hover {
+  outline: 0; }
+
+ul, ol, dd, menu, dl, figure, pre, table, fieldset, legend, hr, h1, h2, h3, h4, h5, h6, p, a {
+  margin: 0;
+  padding: 0; }
+
+b, strong {
+  font-weight: bold; }
+
+pre {
+  white-space: pre;
+  white-space: pre-wrap;
+  word-wrap: break-word; }
+
+q {
+  quotes: none; }
+
+q:before, q:after {
+  content: '';
+  content: none; }
+
+sub, sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline; }
+
+sup {
+  top: -0.5em; }
+
+sub {
+  bottom: -0.25em; }
+
+nav ul, nav ol {
+  list-style: none;
+  list-style-image: none; }
+
+li > ul, li > ol {
+  margin-bottom: 0; }
+
+img {
+  border: 0;
+  -ms-interpolation-mode: bicubic;
+  max-width: 100%;
+  min-height: auto;
+  vertical-align: middle; }
+
+svg:not(:root) {
+  overflow: hidden; }
+
+figure {
+  margin: 0; }
+
+figure > img {
+  display: block; }
+
+form {
+  margin: 0; }
+
+fieldset {
+  border: 1px solid silver;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em; }
+
+legend {
+  border: 0;
+  padding: 0;
+  white-space: normal;
+  *margin-left: -7px; }
+
+button, input, select, textarea {
+  font-size: 100%;
+  margin: 0;
+  vertical-align: baseline;
+  *vertical-align: middle; }
+
+button, input {
+  line-height: normal; }
+
+button, html input[type="button"], input[type="reset"], input[type="submit"] {
+  -webkit-appearance: button;
+  cursor: pointer;
+  *overflow: visible; }
+
+button[disabled], input[disabled] {
+  cursor: default; }
+
+input[type="checkbox"], input[type="radio"] {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0;
+  *height: 13px;
+  *width: 13px; }
+
+input[type="search"] {
+  -webkit-appearance: textfield;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box; }
+
+input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none; }
+
+button::-moz-focus-inner, input::-moz-focus-inner {
+  border: 0;
+  padding: 0; }
+
+textarea {
+  overflow: auto;
+  vertical-align: top;
+  resize: vertical; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+.chromeframe {
+  background: #cccccc;
+  color: black;
+  margin: 0.2em 0;
+  padding: 0.2em 0; }
+
+
+
+
+
+
+li > ul, li > ol {
+  margin-bottom: 0; }
+
+/*
+
+Figure & Figcaption
+===================
+
+    <figure>
+        <img alt="" src="img/tmp/rock-hammer-1.jpg">
+        <figcaption>Figure caption</figcaption>
+    </figure>
+
+*/
+
+
+
+/*
+
+Grids
+=====
+
+Put Your Grid System Here
+
+*/
+/*
+
+Base Styles
+===========
+
+HTML, BODY, #wrapper styles
+
+*/
+
+body {
+  min-width: 260px;
+  overflow-x: hidden;
+  width: 100%; }
+
+
+/*
+
+Header
+======
+
+Styles for the header element
+
+*/
+header[role='banner'] {
+  background-color: red; }
+
+/*
+
+Main
+====
+
+Styles for the main element
+
+*/
+
+/*
+
+Aside
+=====
+
+Styles for the aside element
+
+*/
+
+/*
+
+Footer
+======
+
+Styles for the footer element
+
+*/
+
+/*
+
+Headings
+========
+
+    <h1>This is the primary headline</h1>
+    <h2>This is the secondary headline</h2>
+    <h3>This is the tertiary headline</h3>
+    <h4>This is the average headline</h4>
+    <h5>This is the small headline</h5>
+    <h6>This is the micro headline</h6>
+
+*/
+h1, h2, h3, h4, h5, h6 {
+  font-family: Georgia, serif; }
+
+
+
+
+
+
+
+/*
+
+Body Copy
+========
+
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac ligula non felis fermentum tincidunt. Suspendisse sapien odio, vestibulum euismod metus at, aliquet dapibus purus. Suspendisse lacinia sit amet ante eget gravida.</p>
+
+    <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac ligula non felis fermentum tincidunt. Suspendisse sapien odio, vestibulum euismod metus at, aliquet dapibus purus. Suspendisse lacinia sit amet ante eget gravida.</p>
+
+*/
+p {
+  font-family: Georgia, serif; }
+
+/* --- used if wanting to style the first paragraph slightly differently --- */
+
+::-moz-selection, ::-moz-selection {
+  background-color: orange;
+  color: white; }
+
+/* --- used if wanting to style the first paragraph slightly differently --- */
+
+::-moz-selection, ::selection {
+  background-color: orange;
+  color: white; }
+
+/*
+
+Links
+=====
+
+	<a href="">this is a link</a>
+	<a class="is-selected" href="">this link is selected</a>
+
+*/
+
+
+/*
+
+Blockquotes
+===========
+
+    <blockquote>
+        <p>You can put a cat in an oven, but that don't make it a biscuit.</p>
+    </blockquote>
+
+*/
+
+/*
+
+Miscellaneous Typography
+=======================
+
+	<p><strong>rendered as bold text</strong></p>
+
+	<p><em>rendered as italic text</em></p>
+
+	<p><del>rendered as deleted text</del></p>
+
+	<p><dfn>defines a definition term</dfn></p>
+
+	<p><abbr title="extended abbr text should show when mouse over">&lt;abbr&gt; abbr - extended text when mouseover.</abbr></p>
+	<p><acronym title="extended acronym text should show when mouse over">&lt;acronym&gt; acronym - extended text when mouseover.</acronym></p>
+
+	<address>This would be rendered the address</address>
+
+	<small>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</small>
+
+
+*/
+
+
+
+
+
+
+
+
+/*
+
+Code
+====
+
+	<pre>This is a pre tag rendered</pre>
+
+	<code>This is a code tag rendered</code>
+
+	<pre><code>This is a code tag in a pre tag rendered</code></pre>
+
+*/
+
+
+
+/*
+
+Unordered Lists
+===============
+
+    <ul>
+        <li>An unordered list item</li>
+        <li>An unordered list item</li>
+        <li>An unordered list item</li>
+        <li>An unordered list item</li>
+        <ul>
+            <li>An unordered list item</li>
+            <li>An unordered list item</li>
+            <li>An unordered list item</li>
+            <li>An unordered list item</li>
+        </ul>
+    </ul>
+
+*/
+
+
+
+
+/*
+
+## Ordered Lists
+```
+<ol>
+    <li>An unordered list item</li>
+    <li>An unordered list item</li>
+    <li>An unordered list item</li>
+    <li>An unordered list item</li>
+    <ol>
+        <li>An unordered list item</li>
+        <li>An unordered list item</li>
+        <li>An unordered list item</li>
+        <li>An unordered list item</li>
+    </ol>
+</ol>
+```
+*/
+
+
+
+
+/*
+
+## Description Lists
+
+```
+<dl>
+    <dt>Term</dt>
+    <dd>Description</dd>
+    <dt>Term</dt>
+    <dd>Description</dd>
+</dl>
+```
+
+*/
+
+
+
+/*
+
+Main Navigation
+===============
+
+    <nav class="main-nav" role="navigation">
+        <ul class="main-nav-list">
+            <li class="main-nav-item"><a class="main-nav-link" href="">A main link</a></li>
+            <li class="main-nav-item"><a class="main-nav-link" href="">A main link</a></li>
+            <li class="main-nav-item"><a class="main-nav-link" href="">A main link</a></li>
+            <li class="main-nav-item"><a class="main-nav-link" href="">A main link</a></li>
+        </ul>
+    </nav>
+
+*/
+
+
+
+
+
+/*
+
+Pagination Navigation
+=====================
+
+<ul class="pagination">
+	<li><a href="#">&laquo;</a></li>
+	<li><a href="#">1</a></li>
+	<li><a href="#">2</a></li>
+	<li><a href="#">3</a></li>
+	<li><a href="#">4</a></li>
+	<li><a href="#">5</a></li>
+	<li><a href="#">&raquo;</a></li>
+</ul>
+
+*/
+
+/*
+
+Breadcrumb Navigation
+=====================
+
+<ol class="breadcrumb">
+	<li><a href="#">Home</a></li>
+	<li><a href="#">Categories</a></li>
+	<li class="active">Animals</li>
+</ol>
+
+*/
+
+/*
+
+Tables
+======
+
+Styles for the tables
+
+	<table>
+		<thead>
+			<tr>
+				<th></th>
+			</tr>
+			<tr>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th></th>
+			</tr>
+			<tr>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
+
+*/
+
+
+
+/*
+
+Media Objects
+=============
+
+<div class="media">
+	<a class="" href="">
+		<img class="media-object" src="" alt="">
+	</a>
+	<div class="media-body">
+		<h4 class="media-heading"></h4>
+		<p></p>
+	</div>
+</div>
+
+*/
+
+
+
+
+/*
+
+Forms
+=====
+
+<form action="/">
+	<fieldset>
+		<label for="name">Name</label>
+		<input type="text" id="name" class="form-text" />
+		<p class="form-help">This is help text under the form field.</p>
+		<label for="email">Email</label>
+		<input type="email" id="email" class="form-text" />
+	</fieldset>
+	<fieldset>
+		<label for="gender">Gender</label>
+		<select id="gender">
+			<option>Male</option>
+			<option>Female</option>
+			<option>Cylon</option>
+		</select>
+	</fieldset>
+	<fieldset class="radio">
+		<label for="notifications">Notifications</label>
+		<ul>
+			<li><label><input type="radio" name="notifications" /> Send me email</label></li>
+			<li><label><input type="radio" name="notifications" /> Don't send me email</label></li>
+			<li><label><input type="radio" name="notifications" /> Send me flowers</label></li>
+		</ul>
+	</fieldset>
+	<fieldset>
+		<label for="url">URL</label>
+		<input type="url" id="url" class="form-text" placeholder="http://yourdomain.com" />
+	</fieldset>
+	<fieldset>
+		<label for="bio">Bio</label>
+		<textarea id="bio"></textarea>
+	</fieldset>
+	<fieldset class="check">
+		<label><input type="checkbox" /> I accept the terms of service and lorem ipsum.</label>
+	</fieldset>
+	<fieldset class="form-actions">
+		<button type="submit">Submit</button>
+	</fieldset>
+</form>
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+Search Forms
+============
+
+	<form action="/" class="search">
+		<fieldset>
+			<input type="text" placeholder="Search" />
+			<button type="submit">Go!</button>
+		</fieldset>
+	</form>
+
+*/
+
+
+
+
+/*
+
+Modules
+=======
+
+Put your 'modules' here
+
+*/
+/*
+
+Widgets
+=======
+
+Put your 'widgets' here
+
+*/
+/*
+
+Scratch File
+============
+
+This is for code to exist before it's re-factored put in it's place
+
+*/
+/*
+Shame CSS
+     This is not a dumping ground. It is a staging area for hacks that are
+     intended to be fixed and resolved so as not to sully our
+     production-ready codebase. Hacks are necessary, but they are not
+     permanent, nor are they acceptable long-term. You are not done when
+     you've moved your selector and rules here.
+
+     This is not intended to be an easy fix, or a simple way out. You will
+     spend time writing out your shame, and you will make it known that
+     you indeed had to resort to a hack with your next commit
+
+     Rules:
+       1) Your documentation should be written in block comment format so
+          that your shame is publically visible in the compiled stylesheet
+          (also helpful for debugging)
+
+       2) Name yourself so we can all scorn your lack of front-end prowess
+          (or talk to you about any questions we have)
+
+       3) Name the location your code would go were it not such a horrible
+          travesty to the name of stylesheet.
+
+       4) Give the motive behind your sociopathic manipulation of CSS, what
+          areas are affected, what this solves, and most importantly...
+
+       5) How would you go about rectifying the horrible crimes you have
+          committed given more time.
+*/
+@media print {
+  @page {
+    margin: 0.5cm; }
+
+  * {
+    background: transparent !important;
+    color: black !important;
+    /* Black prints faster: h5bp.com/s */
+    -webkit-box-shadow: none !important;
+    /* Black prints faster: h5bp.com/s */
+    box-shadow: none !important;
+    text-shadow: none !important; }
+  a, a:visited {
+    text-decoration: underline; }
+  a[href]:after {
+    content: " (" attr(href) ")"; }
+  abbr[title]:after {
+    content: " (" attr(title) ")"; }
+  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after {
+    content: ""; }
+  pre, blockquote {
+    border: 1px solid #999999;
+    page-break-inside: avoid; }
+  thead {
+    display: table-header-group;
+    /* h5bp.com/t */ }
+  tr, img {
+    page-break-inside: avoid; }
+  img {
+    max-width: 100% !important; }
+  p, h2, h3 {
+    orphans: 3;
+    widows: 3; }
+  h2, h3 {
+    page-break-after: avoid; } }
+
+/* endif */
