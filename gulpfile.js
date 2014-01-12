@@ -8,6 +8,7 @@
 	var sass = require('gulp-sass');
 	var prefix = require('gulp-autoprefixer');
 	var minifycss = require('gulp-minify-css');
+	var rev = require('gulp-rev');
 
 	// JavaScript
 	var uglify = require('gulp-uglify');
@@ -33,6 +34,7 @@
 					))
 				.pipe(gulp.dest('./dev/css'))
 				.pipe(minifycss())
+				.pipe(rev())
 				.pipe(gulp.dest('./prod/css'));
 		});
 
@@ -43,16 +45,16 @@
 				.pipe(gulp.dest('./prod/js'));
 		});
 
-	// Images
+	// SVG
 		gulp.task('svgmin', function() {
 			gulp.src('./dev/img/svg/*.svg')
 			.pipe(svgmin())
-			.pipe(gulp.dest('./dev/img/svg'))
-			.pipe(gulp.dest('./prod/img/svg'));
+			.pipe(gulp.dest('./dev'));
 		});
 
+	// Images
 		gulp.task('imagemin', function () {
-			gulp.src('./dev/img/**/*')
+			gulp.src('./dev/img/*')
 			.pipe(imagemin())
 			.pipe(gulp.dest('./dev/img'))
 			.pipe(gulp.dest('./prod/img'));
@@ -70,16 +72,19 @@
 	gulp.task('default', function(){
 
 		// watch me getting Sassy
-		gulp.watch("./dev/sass/**/*.scss", function(event){
+		gulp.watch("./dev/sass/**/*", function(event){
 			gulp.run('sass');
 		});
 		// make my JavaScript ugly
-		gulp.watch("./dev/js/**/*.js", function(event){
+		gulp.watch("./dev/js/**/*", function(event){
 			gulp.run('uglify');
+		});
+		// SVG
+		gulp.watch("./dev/img/svg/**/*", function(event){
+			gulp.run('svgmin');
 		});
 		// images
 		gulp.watch("./dev/img/**/*", function(event){
 			gulp.run('imagemin');
-			gulp.run('svgmin');
 		});
 	});
