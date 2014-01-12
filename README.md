@@ -20,7 +20,7 @@ I'm a simple man with simple needs when it comes to web development really. So I
 
 ### Image plugins
 
-- [gulp-svgmin](https://github.com/ben-eb/gulp-svgmin)
+- [gulp-svgmin](https://github.com/ben-eb/gulp-svgmin) << currently now working
 - [gulp-imagemin](https://github.com/sindresorhus/gulp-imagemin)
 
 ### Misc. plugins
