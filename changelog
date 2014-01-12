@@ -20,4 +20,5 @@ gulpy-imagemin
 12/01/2014
 
 adds gulp-rev for cache-busting (currently adds on ./prod css files only)
-
+adds license
+adds relevant links to readme.md
