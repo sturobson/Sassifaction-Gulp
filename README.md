@@ -1,6 +1,18 @@
 Sassifaction-Gulp
 =================
 
+
+## Notice of Depreciation
+
+This repo is now depreciated as it was an experiment in getting gulp up and running.
+
+For an up to date version of Sassifaction you should get it fromt the [Sassifaction Repo](https://github.com/sturobson/Sassifaction)
+
+
+## Notice of deletion
+
+This repo will be deleted in two weeks time.
+
 Using Sassifaction's mixin library and getting gulp to do things
 
 ## Gulp Plugins included
